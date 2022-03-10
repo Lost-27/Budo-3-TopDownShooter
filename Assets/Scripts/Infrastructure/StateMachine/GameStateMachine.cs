@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TDS.Infrastructure.SceneHelper;
 using TDS.Infrastructure.StateMachine.State;
 
 namespace TDS.Infrastructure.StateMachine
@@ -9,12 +10,13 @@ namespace TDS.Infrastructure.StateMachine
         private readonly Dictionary<Type, IState> _states;
         private IState _activeState;
 
-        public GameStateMachine()
+        public GameStateMachine(ISceneHelper sceneHelper)
         {
             _states = new Dictionary<Type, IState>
             {
-                {typeof(BootstrapState), new BootstrapState(this)},
-                {typeof(MenuState), new MenuState(this)}
+                {typeof(BootstrapState), new BootstrapState(this, sceneHelper)},
+                {typeof(MenuState), new MenuState(this, sceneHelper)},
+                {typeof(GameState), new GameState(this)},
             };
         }
         
