@@ -4,6 +4,7 @@ namespace TDS.Game.Player
 {
     public class PlayerAttack : MonoBehaviour
     {
+        [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private float _shootDelay = 0.5f;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPointTransform;
@@ -27,7 +28,7 @@ namespace TDS.Game.Player
         private void Attack()
         {
             CreateBullet();
-            // _playerAnimation.PlayShoot();
+            _playerAnimation.PlayShoot();
             SetDelay();
         }
 
