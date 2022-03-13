@@ -1,12 +1,20 @@
 using TDS.Infrastructure.SceneHelper;
 using TDS.Utility.Constants;
+using UnityEngine;
 
 namespace TDS.Infrastructure.StateMachine.State
 {
     public class BootstrapState : IState
     {
+        #region Variables
+
         private readonly IGameStateMachine _gameStateMachine;
-        private readonly ISceneHelper _sceneHelper;        
+        private readonly ISceneHelper _sceneHelper;   
+
+        #endregion
+
+        
+        #region Constructor
 
         public BootstrapState(IGameStateMachine gameStateMachine, ISceneHelper sceneHelper)
         {
@@ -14,16 +22,26 @@ namespace TDS.Infrastructure.StateMachine.State
             _sceneHelper = sceneHelper;
         }
 
+        #endregion
+        
+
+        #region Public methods
+
         public void Enter()
         {
-            UnityEngine.Debug.Log($"Enter BootstrapState Frame <{UnityEngine.Time.frameCount}>");
+            Debug.Log($"Enter BootstrapState Frame <{Time.frameCount}>");
             LoadMenuScene();            
         }
 
         public void Exit()
         {
-            UnityEngine.Debug.Log($"Exit BootstrapState Frame <{UnityEngine.Time.frameCount}>");
+            Debug.Log($"Exit BootstrapState Frame <{Time.frameCount}>");
         }
+
+        #endregion
+        
+
+        #region Private methods
 
         private void LoadMenuScene()
         {
@@ -34,5 +52,7 @@ namespace TDS.Infrastructure.StateMachine.State
         {
             _gameStateMachine.Enter<MenuState>();
         }
+
+        #endregion
     }
 }

@@ -7,8 +7,15 @@ namespace TDS.Infrastructure.StateMachine
 {
     public class GameStateMachine : IGameStateMachine
     {
+        #region Variables
+
         private readonly Dictionary<Type, IState> _states;
         private IState _activeState;
+
+        #endregion
+
+
+        #region Constructor
 
         public GameStateMachine(ISceneHelper sceneHelper)
         {
@@ -19,7 +26,12 @@ namespace TDS.Infrastructure.StateMachine
                 {typeof(GameState), new GameState(this)},
             };
         }
-        
+
+        #endregion
+
+
+        #region Public methods
+
         public void Enter<TState>() where TState : IState
         {
             _activeState?.Exit();
@@ -30,5 +42,7 @@ namespace TDS.Infrastructure.StateMachine
         // public void Exit<TState>() where TState : IState
         // {     
         // }
+
+        #endregion
     }
 }

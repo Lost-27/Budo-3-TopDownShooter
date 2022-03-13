@@ -9,15 +9,32 @@ namespace TDS.Infrastructure.SceneHelper
 {
     public class AsyncSceneHelper : ISceneHelper
     {
+        #region Variables
+
         private readonly ICoroutineRunner _coroutineRunner;
+
+        #endregion
+
+
+        #region Constructor
 
         public AsyncSceneHelper(ICoroutineRunner coroutineRunner)
         {
             _coroutineRunner = coroutineRunner;
         }
 
+        #endregion
+
+
+        #region Public methods
+
         public void Load(string sceneName, Action onLoaded = null) =>
             _coroutineRunner.StartCoroutine(LoadScene(sceneName, onLoaded));
+
+        #endregion
+        
+
+        #region Private methods
 
         private IEnumerator LoadScene(string sceneName, Action onLoaded = null)
         {
@@ -26,8 +43,8 @@ namespace TDS.Infrastructure.SceneHelper
             {
                 yield return new WaitForSeconds(3);
             }
-           
-            
+
+
             AsyncOperation waitScene = SceneManager.LoadSceneAsync(sceneName);
 
             while (!waitScene.isDone)
@@ -35,5 +52,7 @@ namespace TDS.Infrastructure.SceneHelper
 
             onLoaded?.Invoke();
         }
+
+        #endregion
     }
 }

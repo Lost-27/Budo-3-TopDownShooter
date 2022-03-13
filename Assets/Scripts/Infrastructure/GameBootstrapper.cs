@@ -8,7 +8,14 @@ namespace TDS.Infrastructure
 {
     public class GameBootstrapper : MonoBehaviour, ICoroutineRunner
     {
+        #region Variables
+
         private Game _game;
+
+        #endregion
+        
+
+        #region Unity lifecycle
 
         private void Awake()
         {
@@ -17,5 +24,7 @@ namespace TDS.Infrastructure
 
             DontDestroyOnLoad(this);
         }
+
+        #endregion
     }
 }

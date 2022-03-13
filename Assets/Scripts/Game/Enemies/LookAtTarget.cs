@@ -4,7 +4,14 @@ namespace TDS.Game.Enemies
 {
     public class LookAtTarget : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private Transform _target;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Update()
         {
@@ -13,6 +20,11 @@ namespace TDS.Game.Enemies
                 RotateTowardsTarget();
             }
         }
+
+        #endregion
+
+
+        #region Private methods
 
         private void RotateTowardsTarget()
         {
@@ -24,5 +36,7 @@ namespace TDS.Game.Enemies
             Vector2 directionToTarget = _target.position - transform.position;
             transform.up = directionToTarget;
         }
+
+        #endregion
     }
 }

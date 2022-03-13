@@ -4,12 +4,19 @@ namespace TDS.Game.Player
 {
     public class PlayerAttack : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private float _shootDelay = 0.5f;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPointTransform;
 
         private float _currentDelay;
+
+        #endregion
+        
+
+        #region Unity lifecycle
 
         private void Update()
         {
@@ -18,6 +25,11 @@ namespace TDS.Game.Player
             if (Input.GetButtonDown("Fire1") && CanShoot())
                 Attack();
         }
+
+        #endregion
+        
+
+        #region Private methods
 
         private void DecrementTimer(float deltaTime) =>
             _currentDelay -= deltaTime;
@@ -37,5 +49,7 @@ namespace TDS.Game.Player
 
         private void CreateBullet() =>
             Instantiate(_bulletPrefab, _bulletSpawnPointTransform.position, _bulletSpawnPointTransform.rotation);
+
+        #endregion
     }
 }

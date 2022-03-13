@@ -5,10 +5,17 @@ namespace TDS.Game.Objects
 {
     public class Bullet : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private float _speed;
         [SerializeField] private float _lifeTime;
 
         private Vector3 _velocity;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Start()
         {
@@ -19,6 +26,11 @@ namespace TDS.Game.Objects
 
         private void Update() =>
             Move();
+
+        #endregion
+
+
+        #region Private methods
 
         private void Move() =>
             transform.Translate(_velocity * Time.deltaTime);
@@ -32,5 +44,7 @@ namespace TDS.Game.Objects
 
         private void Delete() =>
             Destroy(gameObject);
+
+        #endregion
     }
 }

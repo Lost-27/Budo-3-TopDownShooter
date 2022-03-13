@@ -1,30 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-namespace TDS
+namespace TDS.Game.Player
 {
     public class PlayerLives : MonoBehaviour
     {
+        #region Variables
+
+        [SerializeField] private PlayerAnimation _playerAnimation;
         [SerializeField] private int _maxLives = 5;
         [SerializeField] private int _currentLives;
 
-        private void Awake()
+        #endregion
+        
+
+        #region Unity lifecycle
+
+        private void Start()
         {
             _currentLives = _maxLives;
         }
 
-        void Start()
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-        
+            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
+            {
+                --_currentLives;
+                Destroy(collision.gameObject);
+                Death();
+            }
         }
 
-        // Update is called once per frame
-        void Update()
-        {
+        #endregion
         
-        }
-
         //public void RemoveLive()
         //{
         //    CurrentLives--;
@@ -35,14 +43,22 @@ namespace TDS
         //    OnLivesChanged?.Invoke();
         //}
 
-        //public void AddLive()
-        //{
-        //    if (CurrentLives >= _maxLives)
-        //        return;
+        public void AddLive()
+        {
+            if (_currentLives >= _maxLives)
+                return;
 
-        //    CurrentLives++;
+            _currentLives++;
 
-        //    OnLivesChanged?.Invoke();
-        //}
+            // OnLivesChanged?.Invoke();
+        }
+
+        private void Death()
+        {
+            if (_currentLives <= 0)
+            {
+                _playerAnimation.PlayDeath();
+            }
+        }
     }
 }

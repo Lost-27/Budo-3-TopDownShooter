@@ -40,9 +40,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2788551959351299288}
   - component: {fileID: 2788551959351299291}
-  - component: {fileID: 2788551959351299290}
   - component: {fileID: 2788551959351299293}
   - component: {fileID: 1449755297147526518}
+  - component: {fileID: 1244289029}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -87,20 +87,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &2788551959351299290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2788551959351299292}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 157d49ecbd0d014469ef446e5b4136f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rb: {fileID: 2788551959351299291}
-  _speed: 3
 --- !u!58 &2788551959351299293
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -130,6 +116,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 0}
+--- !u!114 &1244289029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2788551959351299292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efbacfd2446525049b225a462f09b913, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyAnimation: {fileID: 5306025873417096375}
+  _maxLives: 1
+  _currentLives: 0
 --- !u!1 &2788551959617423004
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +142,7 @@ GameObject:
   - component: {fileID: 2788551959617423000}
   - component: {fileID: 2788551959617423003}
   - component: {fileID: 2788551959617423002}
-  - component: {fileID: 2788551959617423005}
+  - component: {fileID: 5306025873417096375}
   m_Layer: 0
   m_Name: Sprite
   m_TagString: Untagged
@@ -222,9 +223,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788551959617423004}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 849b5c49fcd263c43ab747a945bfe05e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 83822f3914e24e24cae26e853e6bcd6c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -233,22 +234,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2788551959617423005
+--- !u!114 &5306025873417096375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788551959617423004}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31f0d6184afae454e99d565e6acbeaed, type: 3}
+  m_Script: {fileID: 11500000, guid: c837f24c74bc3c849a9389e7f1588488, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rb: {fileID: 2788551959351299291}
   _animator: {fileID: 2788551959617423002}
-  _shootName: Shoot
-  _speedName: Speed
+  _deathName: Death
 --- !u!1 &2788551960562196916
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,14 +257,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2788551960562196917}
-  - component: {fileID: 2788551960562196914}
+  - component: {fileID: 526831244}
   m_Layer: 0
   m_Name: Attack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2788551960562196917
 Transform:
   m_ObjectHideFlags: 0
@@ -281,19 +280,18 @@ Transform:
   m_Father: {fileID: 2788551959351299288}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2788551960562196914
+--- !u!114 &526831244
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2788551960562196916}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22846ee14e6862049835cfa8bb8c2c17, type: 3}
+  m_Script: {fileID: 11500000, guid: baea337be76fc4a449b7aec77bee484a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimation: {fileID: 2788551959617423005}
-  _shootDelay: 0
-  _bulletPrefab: {fileID: 0}
+  _timeDelay: 3
+  _bulletPrefab: {fileID: 5234355274108496451, guid: ff8319579ec45f047a650b8eff6d8ebc, type: 3}
   _bulletSpawnPointTransform: {fileID: 2788551959348707399}

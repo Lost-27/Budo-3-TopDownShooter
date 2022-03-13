@@ -4,10 +4,17 @@ namespace TDS.Game.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private float _speed;
 
         private Camera _camera;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Start()
         {
@@ -19,6 +26,11 @@ namespace TDS.Game.Player
             Move();
             Rotate();
         }
+
+        #endregion
+
+        
+        #region Private methods
 
         private void Move()
         {
@@ -38,5 +50,7 @@ namespace TDS.Game.Player
             Vector3 up = worldPoint - transform.position;
             transform.up = up;
         }
+
+        #endregion
     }
 }

@@ -167,6 +167,7 @@ MonoBehaviour:
   _animator: {fileID: 582337508909322221}
   _shootName: Shoot
   _speedName: Speed
+  _deathName: Death
 --- !u!1 &582337509744459910
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +267,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc8f06164d50a34a8ca4bc5fcc8ae14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLives: 5
+  _playerAnimation: {fileID: 582337508909322220}
+  _maxLives: 3
   _currentLives: 0
 --- !u!1 &582337510407056304
 GameObject:
