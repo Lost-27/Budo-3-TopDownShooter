@@ -9,11 +9,10 @@ namespace TDS.Game.Pickups
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Object that entered the trigger : " + other);
-            PlayerLives playerLives = other.GetComponent<PlayerLives>();
+            PlayerController playerController = other.GetComponent<PlayerController>();
 
-            if (playerLives == null) return;
-            playerLives.AddLive();
+            if (playerController == null) return;
+            playerController.AddLive();
             Destroy(gameObject);
         }
 

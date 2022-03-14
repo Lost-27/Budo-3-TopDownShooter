@@ -3,22 +3,30 @@ using UnityEngine;
 
 namespace TDS.Game.Player
 {
-    public class PlayerLives : MonoBehaviour
+    public class PlayerController : Unit
     {
         #region Variables
 
         [SerializeField] private PlayerAnimation _playerAnimation;
-        [SerializeField] private int _maxLives = 5;
-        [SerializeField] private int _currentLives;
+        [SerializeField] private PlayerMovement _playerMovement;
+        [SerializeField] private PlayerAttack _playerAttack;
+        [SerializeField] private CircleCollider2D _circleCollider2D;
 
         #endregion
-        
+
+
+        #region Properties
+
+        public bool IsPlayerDeath { get; private set; }
+
+        #endregion
+
 
         #region Unity lifecycle
 
         private void Start()
         {
-            _currentLives = _maxLives;
+            IsPlayerDeath = false;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -32,16 +40,7 @@ namespace TDS.Game.Player
         }
 
         #endregion
-        
-        //public void RemoveLive()
-        //{
-        //    CurrentLives--;
 
-        //    if (CurrentLives < 1)
-        //        SceneHelper.Instance.LoadScene(3);
-
-        //    OnLivesChanged?.Invoke();
-        //}
 
         public void AddLive()
         {
@@ -49,15 +48,17 @@ namespace TDS.Game.Player
                 return;
 
             _currentLives++;
-
-            // OnLivesChanged?.Invoke();
         }
 
         private void Death()
         {
             if (_currentLives <= 0)
             {
+                IsPlayerDeath = true;
                 _playerAnimation.PlayDeath();
+                _playerMovement.enabled = false;
+                _playerAttack.enabled = false;
+                _circleCollider2D.enabled = false;
             }
         }
     }

@@ -1,22 +1,36 @@
 using System.Collections;
+using TDS.Game.Player;
 using UnityEngine;
 
 namespace TDS.Game.Enemies
 {
     public class EnemyAttack : MonoBehaviour
     {
+        #region Variables
+
+        [SerializeField] private PlayerController playerController;
         [SerializeField] private float _timeDelay = 3f;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPointTransform;
 
-        void Start()
+        #endregion
+
+
+        #region Unity lifecycle
+
+        private void Start()
         {
             StartCoroutine(AttackAfterWhile());
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private IEnumerator AttackAfterWhile()
         {
-            while (true)
+            while (!playerController.IsPlayerDeath)
             {
                 yield return new WaitForSeconds(_timeDelay);
 
@@ -31,5 +45,8 @@ namespace TDS.Game.Enemies
 
         private void CreateBullet() =>
             Instantiate(_bulletPrefab, _bulletSpawnPointTransform.position, _bulletSpawnPointTransform.rotation);
+
+        #endregion
+
     }
 }

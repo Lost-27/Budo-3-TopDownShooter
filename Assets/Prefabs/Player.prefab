@@ -268,6 +268,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerAnimation: {fileID: 582337508909322220}
+  _playerMovement: {fileID: 582337509744459913}
+  _playerAttack: {fileID: 582337508826643567}
+  _circleCollider2D: {fileID: 582337509744459914}
   _maxLives: 3
   _currentLives: 0
 --- !u!1 &582337510407056304

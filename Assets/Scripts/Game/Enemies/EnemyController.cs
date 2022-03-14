@@ -2,23 +2,19 @@ using UnityEngine;
 
 namespace TDS.Game.Enemies
 {
-    public class EnemyLives : MonoBehaviour
+    public class EnemyController : Unit
     {
         #region Variables
 
         [SerializeField] private EnemyAnimation _enemyAnimation;
-        [SerializeField] private int _maxLives = 1;
-        [SerializeField] private int _currentLives;
+        [SerializeField] private LookAtTarget _lookAtTarget;
+        [SerializeField] private EnemyAttack _enemyAttack;
+        [SerializeField] private CircleCollider2D _circleCollider2D;
 
         #endregion
-        
+
 
         #region Unity lifecycle
-
-        private void Start()
-        {
-            _currentLives = _maxLives;
-        }
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
@@ -32,12 +28,19 @@ namespace TDS.Game.Enemies
 
         #endregion
 
+        #region Private methods
+
         private void Death()
         {
             if (_currentLives <= 0)
             {
                 _enemyAnimation.EnemyDeath();
+                _lookAtTarget.enabled = false;
+                _enemyAttack.enabled = false;
+                _circleCollider2D.enabled = false;
             }
         }
+
+        #endregion
     }
 }

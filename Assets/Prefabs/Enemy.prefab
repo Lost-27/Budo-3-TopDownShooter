@@ -129,8 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAnimation: {fileID: 5306025873417096375}
+  _lookAtTarget: {fileID: 1449755297147526518}
+  _enemyAttack: {fileID: 526831244}
+  _circleCollider2D: {fileID: 2788551959351299293}
   _maxLives: 1
-  _currentLives: 0
 --- !u!1 &2788551959617423004
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baea337be76fc4a449b7aec77bee484a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
   _timeDelay: 3
   _bulletPrefab: {fileID: 5234355274108496451, guid: ff8319579ec45f047a650b8eff6d8ebc, type: 3}
   _bulletSpawnPointTransform: {fileID: 2788551959348707399}
