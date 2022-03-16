@@ -8,10 +8,12 @@ namespace TDS.Game.Enemies
     {
         #region Variables
 
-        [SerializeField] private PlayerController playerController;
+        [SerializeField] private PlayerController playerController; // TODO: Inject
         [SerializeField] private float _timeDelay = 3f;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPointTransform;
+
+        private IEnumerator _attackRoutine;
 
         #endregion
 
@@ -20,7 +22,18 @@ namespace TDS.Game.Enemies
 
         private void Start()
         {
-            StartCoroutine(AttackAfterWhile());
+            _attackRoutine = AttackAfterWhile();
+            StartCoroutine(_attackRoutine);
+        }
+
+        #endregion
+
+        #region Public methods
+
+        public void StopAttack()
+        {
+            if (_attackRoutine != null)
+                StopCoroutine(_attackRoutine);
         }
 
         #endregion
@@ -47,6 +60,5 @@ namespace TDS.Game.Enemies
             Instantiate(_bulletPrefab, _bulletSpawnPointTransform.position, _bulletSpawnPointTransform.rotation);
 
         #endregion
-
     }
 }

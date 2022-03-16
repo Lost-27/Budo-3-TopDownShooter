@@ -12,18 +12,21 @@ namespace TDS.Game.Enemies
         [SerializeField] private CircleCollider2D _circleCollider2D;
 
         #endregion
+        
 
-
-        #region Unity lifecycle
-
-        private void OnCollisionEnter2D(Collision2D collision)
+        #region Public methods
+        
+        public void TakeDamage(int damage)
         {
-            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+            _currentLives -= damage;
+
+            if (_currentLives < 1)
             {
-                --_currentLives;
-                Destroy(collision.gameObject);
                 Death();
+                // SceneHelper.Instance.LoadScene(3);
             }
+
+            // OnLivesChanged?.Invoke();
         }
 
         #endregion
@@ -37,6 +40,7 @@ namespace TDS.Game.Enemies
                 _enemyAnimation.EnemyDeath();
                 _lookAtTarget.enabled = false;
                 _enemyAttack.enabled = false;
+                _enemyAttack.StopAttack();
                 _circleCollider2D.enabled = false;
             }
         }

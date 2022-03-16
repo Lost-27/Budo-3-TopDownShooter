@@ -29,6 +29,15 @@ namespace TDS.Game.Player
 
         #endregion
 
+        #region Public methods
+
+        public void ResetMove()
+        {
+            _rb.velocity = Vector2.zero;
+        }
+
+        #endregion
+
         
         #region Private methods
 

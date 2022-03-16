@@ -27,8 +27,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 2788551960562196917}
-  m_RootOrder: 0
+  m_Father: {fileID: 2788551959351299288}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2788551959351299292
 GameObject:
@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 2788551959351299293}
   - component: {fileID: 1449755297147526518}
   - component: {fileID: 1244289029}
+  - component: {fileID: 1433081953062970819}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -62,7 +63,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2788551959617423000}
-  - {fileID: 2788551960562196917}
+  - {fileID: 2788551959348707399}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -128,11 +129,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efbacfd2446525049b225a462f09b913, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _maxLives: 1
   _enemyAnimation: {fileID: 5306025873417096375}
   _lookAtTarget: {fileID: 1449755297147526518}
-  _enemyAttack: {fileID: 526831244}
+  _enemyAttack: {fileID: 0}
   _circleCollider2D: {fileID: 2788551959351299293}
-  _maxLives: 1
+--- !u!114 &1433081953062970819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2788551959351299292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baea337be76fc4a449b7aec77bee484a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerController: {fileID: 0}
+  _timeDelay: 3
+  _bulletPrefab: {fileID: 5234355274108496451, guid: ff8319579ec45f047a650b8eff6d8ebc, type: 3}
+  _bulletSpawnPointTransform: {fileID: 2788551959348707399}
 --- !u!1 &2788551959617423004
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,51 +267,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 2788551959617423002}
   _deathName: Death
---- !u!1 &2788551960562196916
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2788551960562196917}
-  - component: {fileID: 526831244}
-  m_Layer: 0
-  m_Name: Attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2788551960562196917
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2788551960562196916}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2788551959348707399}
-  m_Father: {fileID: 2788551959351299288}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &526831244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2788551960562196916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: baea337be76fc4a449b7aec77bee484a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerController: {fileID: 0}
-  _timeDelay: 3
-  _bulletPrefab: {fileID: 5234355274108496451, guid: ff8319579ec45f047a650b8eff6d8ebc, type: 3}
-  _bulletSpawnPointTransform: {fileID: 2788551959348707399}

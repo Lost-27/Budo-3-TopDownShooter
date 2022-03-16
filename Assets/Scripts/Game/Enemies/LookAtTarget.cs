@@ -6,7 +6,7 @@ namespace TDS.Game.Enemies
     {
         #region Variables
 
-        [SerializeField] private Transform _target;
+        [SerializeField] private Transform _target; // TODO: Inject
 
         #endregion
 

@@ -29,16 +29,6 @@ namespace TDS.Game.Player
             IsPlayerDeath = false;
         }
 
-        private void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (collision.collider.gameObject.layer == LayerMask.NameToLayer("EnemyBullet"))
-            {
-                --_currentLives;
-                Destroy(collision.gameObject);
-                Death();
-            }
-        }
-
         #endregion
 
 
@@ -50,6 +40,19 @@ namespace TDS.Game.Player
             _currentLives++;
         }
 
+        public void TakeDamage(int damage)
+        {
+            _currentLives -= damage;
+
+            if (_currentLives < 1)
+            {
+                Death();
+                // SceneHelper.Instance.LoadScene(3);
+            }
+
+            // OnLivesChanged?.Invoke();
+        }
+
         private void Death()
         {
             if (_currentLives <= 0)
@@ -57,6 +60,7 @@ namespace TDS.Game.Player
                 IsPlayerDeath = true;
                 _playerAnimation.PlayDeath();
                 _playerMovement.enabled = false;
+                _playerMovement.ResetMove();
                 _playerAttack.enabled = false;
                 _circleCollider2D.enabled = false;
             }
