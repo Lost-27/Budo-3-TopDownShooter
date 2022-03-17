@@ -1,3 +1,4 @@
+using TDS.Game.Input;
 using TDS.Infrastructure.StateMachine;
 
 namespace TDS.Infrastructure
@@ -9,7 +10,7 @@ namespace TDS.Infrastructure
         public readonly IGameStateMachine GameStateMachine;
 
         #endregion
-        
+
 
         #region Constructor
 

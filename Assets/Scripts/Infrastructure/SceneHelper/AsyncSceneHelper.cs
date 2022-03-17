@@ -39,10 +39,10 @@ namespace TDS.Infrastructure.SceneHelper
         private IEnumerator LoadScene(string sceneName, Action onLoaded = null)
         {
             Debug.Log($"Load AsyncSceneHelper");
-            if (sceneName == SceneTitles.MenuScene)
-            {
-                yield return new WaitForSeconds(3);
-            }
+            // if (sceneName == SceneTitles.MenuScene)
+            // {
+            //     yield return new WaitForSeconds(3);
+            // }
 
 
             AsyncOperation waitScene = SceneManager.LoadSceneAsync(sceneName);

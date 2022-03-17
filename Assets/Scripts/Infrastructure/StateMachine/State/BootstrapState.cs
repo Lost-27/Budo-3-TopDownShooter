@@ -1,4 +1,6 @@
+using TDS.Game.Input;
 using TDS.Infrastructure.SceneHelper;
+using TDS.Utility;
 using TDS.Utility.Constants;
 using UnityEngine;
 
@@ -9,28 +11,30 @@ namespace TDS.Infrastructure.StateMachine.State
         #region Variables
 
         private readonly IGameStateMachine _gameStateMachine;
-        private readonly ISceneHelper _sceneHelper;   
+        private readonly Services.Services _services;
 
         #endregion
 
-        
+
         #region Constructor
 
-        public BootstrapState(IGameStateMachine gameStateMachine, ISceneHelper sceneHelper)
+        public BootstrapState(IGameStateMachine gameStateMachine, Services.Services services, ICoroutineRunner coroutineRunner)
         {
             _gameStateMachine = gameStateMachine;
-            _sceneHelper = sceneHelper;
+            _services = services;
+
+            RegisterServices(coroutineRunner);
         }
 
         #endregion
-        
+
 
         #region Public methods
 
         public void Enter()
         {
             Debug.Log($"Enter BootstrapState Frame <{Time.frameCount}>");
-            LoadMenuScene();            
+            LoadMenuScene();
         }
 
         public void Exit()
@@ -39,13 +43,21 @@ namespace TDS.Infrastructure.StateMachine.State
         }
 
         #endregion
-        
+
 
         #region Private methods
+        
+        private void RegisterServices(ICoroutineRunner coroutineRunner)
+        {
+            _services.Register<IInputService>(new StandardInputService());
+            _services.Register<ICoroutineRunner>(coroutineRunner);
+            _services.Register<ISceneHelper>(new AsyncSceneHelper(_services.Get<ICoroutineRunner>()));
+        }
 
         private void LoadMenuScene()
         {
-            _sceneHelper.Load(SceneTitles.MenuScene, EnterMenuState);
+            ISceneHelper sceneLoader = _services.Get<ISceneHelper>();  
+            sceneLoader.Load(SceneTitles.MenuScene, EnterMenuState);
         }
 
         private void EnterMenuState()

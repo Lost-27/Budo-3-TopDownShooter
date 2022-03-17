@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using TDS.Game.Input;
 using TDS.Infrastructure.SceneHelper;
 using TDS.Infrastructure.StateMachine.State;
+using TDS.Utility;
 
 namespace TDS.Infrastructure.StateMachine
 {
@@ -17,12 +19,12 @@ namespace TDS.Infrastructure.StateMachine
 
         #region Constructor
 
-        public GameStateMachine(ISceneHelper sceneHelper)
+        public GameStateMachine(Services.Services services, ICoroutineRunner coroutineRunner)
         {
             _states = new Dictionary<Type, IState>
             {
-                {typeof(BootstrapState), new BootstrapState(this, sceneHelper)},
-                {typeof(MenuState), new MenuState(this, sceneHelper)},
+                {typeof(BootstrapState), new BootstrapState(this, services, coroutineRunner)},
+                {typeof(MenuState), new MenuState(this, services.Get<ISceneHelper>())},
                 {typeof(GameState), new GameState(this)},
             };
         }

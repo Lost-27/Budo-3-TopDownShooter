@@ -132,7 +132,7 @@ MonoBehaviour:
   _maxLives: 1
   _enemyAnimation: {fileID: 5306025873417096375}
   _lookAtTarget: {fileID: 1449755297147526518}
-  _enemyAttack: {fileID: 0}
+  _enemyAttack: {fileID: 1433081953062970819}
   _circleCollider2D: {fileID: 2788551959351299293}
 --- !u!114 &1433081953062970819
 MonoBehaviour:
