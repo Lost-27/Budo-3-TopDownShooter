@@ -1,4 +1,3 @@
-using System.Collections;
 using TDS.Game.Player;
 using UnityEngine;
 
@@ -8,32 +7,59 @@ namespace TDS.Game.Enemies
     {
         #region Variables
 
-        [SerializeField] private PlayerController playerController; // TODO: Inject
-        [SerializeField] private float _timeDelay = 3f;
-        [SerializeField] private GameObject _bulletPrefab;
-        [SerializeField] private Transform _bulletSpawnPointTransform;
+        [SerializeField] private EnemyAnimation _enemyAnimation;
 
-        private IEnumerator _attackRoutine;
+        [SerializeField] private float _attackDelay = 0.5f;
+        [SerializeField] private int _damage = 1;
+        [SerializeField] private Transform _attackPoint;
+        [SerializeField] private float _attackRadius;
+        [SerializeField] private LayerMask _attackMask;
+
+        private float _currentDelay;
 
         #endregion
 
 
         #region Unity lifecycle
 
-        private void Start()
+        private void Update()
         {
-            _attackRoutine = AttackAfterWhile();
-            StartCoroutine(_attackRoutine);
+            DecrementTimer(Time.deltaTime);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireSphere(_attackPoint.position, _attackRadius);
         }
 
         #endregion
 
+
         #region Public methods
 
-        public void StopAttack()
+        public void Attack()
         {
-            if (_attackRoutine != null)
-                StopCoroutine(_attackRoutine);
+            if (!CanAttack())
+                return;
+
+            _enemyAnimation.EnemyAttack();
+            SetDelay();
+        }
+
+        public void AppleDamage()
+        {
+            Collider2D circle = Physics2D.OverlapCircle(_attackPoint.position, _attackRadius, _attackMask);
+
+            if (circle == null)
+                return;
+
+            PlayerHealth playerHealth = circle.GetComponent<PlayerHealth>();
+
+            if (playerHealth == null)
+                return;
+
+            playerHealth.TakeDamage(_damage);
         }
 
         #endregion
@@ -41,23 +67,14 @@ namespace TDS.Game.Enemies
 
         #region Private methods
 
-        private IEnumerator AttackAfterWhile()
-        {
-            while (!playerController.IsPlayerDeath)
-            {
-                yield return new WaitForSeconds(_timeDelay);
+        private void DecrementTimer(float deltaTime) =>
+            _currentDelay -= deltaTime;
 
-                Attack();
-            }
-        }
+        private bool CanAttack() =>
+            _currentDelay <= 0f;
 
-        private void Attack()
-        {
-            CreateBullet();
-        }
-
-        private void CreateBullet() =>
-            Instantiate(_bulletPrefab, _bulletSpawnPointTransform.position, _bulletSpawnPointTransform.rotation);
+        private void SetDelay() =>
+            _currentDelay = _attackDelay;
 
         #endregion
     }

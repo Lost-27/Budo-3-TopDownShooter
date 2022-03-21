@@ -1,7 +1,6 @@
-using System;
 using System.Collections;
 using TDS.Game.Enemies;
-using TDS.Game.Player;
+using TDS.Utility.Constants;
 using UnityEngine;
 
 namespace TDS.Game.Objects
@@ -31,16 +30,12 @@ namespace TDS.Game.Objects
         private void Update() =>
             Move();
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D col)
         {
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-            
-            if (player != null)
-                player.TakeDamage(_damage);
-
-            else if (enemy != null)
-                enemy.TakeDamage(_damage);
+            if (col.CompareTag(Tags.Enemy))
+            {
+                col.GetComponent<EnemyHealth>().TakeDamage(_damage);
+            }
             
             Delete();
         }

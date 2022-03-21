@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: e1d6957545cbb1a4d8c407865f62a03d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rb: {fileID: 582337509744459912}
   _animator: {fileID: 582337508909322221}
-  _shootName: Shoot
+  _attackName: 
   _speedName: Speed
   _deathName: Death
 --- !u!1 &582337509744459910
@@ -134,9 +134,10 @@ GameObject:
   - component: {fileID: 1745009164}
   - component: {fileID: 582337509744459913}
   - component: {fileID: 7603480652727462545}
+  - component: {fileID: 582337510415727235}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,7 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc8f06164d50a34a8ca4bc5fcc8ae14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLives: 3
   _playerAnimation: {fileID: 582337508909322220}
   _playerMovement: {fileID: 582337509744459913}
   _playerAttack: {fileID: 7603480652727462545}
@@ -241,6 +241,21 @@ MonoBehaviour:
   _shootDelay: 0
   _bulletPrefab: {fileID: 3008816567217100, guid: c709de4b2ff67984c97681ba11ca5202, type: 3}
   _bulletSpawnPointTransform: {fileID: 582337510407056307}
+--- !u!114 &582337510415727235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582337509744459910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5588b849b6e2f2f479578ffdeb658b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 1745009164}
+  _maxHp: 10
+  CurrentHp: 0
 --- !u!1 &582337510407056304
 GameObject:
   m_ObjectHideFlags: 0

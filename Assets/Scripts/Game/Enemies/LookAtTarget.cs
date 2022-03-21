@@ -6,31 +6,56 @@ namespace TDS.Game.Enemies
     {
         #region Variables
 
-        [SerializeField] private Transform _target; // TODO: Inject
+        // [SerializeField] private Enemy _enemy;
+        // [SerializeField] private Transform _playerTransform; // TODO: Inject
+
+        // private Transform _startPoint;
 
         #endregion
 
 
         #region Unity lifecycle
 
-        private void Update()
+        // private void Start()
+        // {
+        //     _startPoint.position = transform.position;
+        // }
+
+        // private void Update()
+        // {
+        //     if (_playerTransform != null)
+        //     {
+        //         RotateTowardsTarget();
+        //     }
+        // }
+
+        #endregion
+
+
+        #region Public methods
+
+        public void RotateTowardsTarget(Vector3 targetPos)
         {
-            if (_target != null)
-            {
-                RotateTowardsTarget();
-            }
+            Vector3 directionToTarget = Direction(targetPos);
+            transform.up = directionToTarget;
         }
+
+        // public void RotateTowardsTarget2()
+        // {
+        //     Vector2 directionToTarget = Direction2();
+        //     transform.up = directionToTarget;
+        // }
 
         #endregion
 
 
         #region Private methods
 
-        private void RotateTowardsTarget()
-        {
-            Vector2 directionToTarget = _target.position - transform.position;
-            transform.up = directionToTarget;
-        }
+        private Vector3 Direction(Vector3 targetPos) =>
+            targetPos - transform.position;
+
+        // private Vector2 Direction2() =>
+        //     _startPoint.position - transform.position;
 
         #endregion
     }

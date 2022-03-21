@@ -1,4 +1,3 @@
-using System;
 using TDS.Game.Input;
 using TDS.Infrastructure.Services;
 using UnityEngine;
@@ -15,7 +14,6 @@ namespace TDS.Game.Player
         [SerializeField] private Transform _bulletSpawnPointTransform;
 
         private IInputService _inputService;
-
         private float _currentDelay;
 
         #endregion
@@ -50,7 +48,7 @@ namespace TDS.Game.Player
         private void Attack()
         {
             CreateBullet();
-            _playerAnimation.PlayShoot();
+            _playerAnimation.PlayAttack();
             SetDelay();
         }
 

@@ -1,4 +1,5 @@
 using TDS.Game.Player;
+using TDS.Utility.Constants;
 using UnityEngine;
 
 namespace TDS.Game.Pickups
@@ -7,12 +8,13 @@ namespace TDS.Game.Pickups
     {
         #region Unity lifecycle
 
-        private void OnTriggerEnter2D(Collider2D other)
+        private void OnTriggerEnter2D(Collider2D col)
         {
-            PlayerController playerController = other.GetComponent<PlayerController>();
-
-            if (playerController == null) return;
-            playerController.AddLive();
+            if (col.CompareTag(Tags.Player))
+            {
+                col.GetComponent<PlayerHealth>().AddLive();
+            }
+            
             Destroy(gameObject);
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using TDS.Utility;
-using TDS.Utility.Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
