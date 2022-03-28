@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TDS.Game.Player;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace TDS.Game.Enemies
             Move = 2,
             Attack = 3,
             Death = 4,
+            // BackToStartPosition = 5,
+            Patrol = 6,
         }
 
         #endregion
@@ -22,18 +25,26 @@ namespace TDS.Game.Enemies
         #region Variables
 
         [SerializeField] private EnemyAnimation _enemyAnimation;
-        [SerializeField] private LookAtTarget _lookAtTarget;
         [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private EnemyAttack _enemyAttack;
+        [SerializeField] private EnemyPatrol _enemyPatrol;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private CircleCollider2D _circleCollider;
 
-        [Header("Settings")] 
+        [Header("Settings")]
         [SerializeField] private float _moveRadius = 1f;
         [SerializeField] private float _attackRadius = 0.5f;
 
+        [Header("Pickup settings")]
+        [SerializeField] private List<GameObject> _pickupPrefab;
+
+        [Range(0f, 100f)]
+        [SerializeField] private float _pickupChance;
+
+        [SerializeField] private bool _isPatrol;
+
         private Transform _playerTransform;
-        private Vector3 _startPoint;
+        // private Transform _startPoint;
 
         [SerializeField] private State _currentState = State.None;
 
@@ -44,8 +55,11 @@ namespace TDS.Game.Enemies
 
         private void Start()
         {
+            _currentState = State.None;
             _playerTransform = FindObjectOfType<PlayerMovement>().transform;
-            _startPoint = transform.position;
+            // _startPoint.position = transform.position;
+            
+            _enemyPatrol.enabled = false;
         }
 
         private void Update()
@@ -61,21 +75,20 @@ namespace TDS.Game.Enemies
             }
             else if (distance <= _moveRadius)
             {
-                _lookAtTarget.RotateTowardsTarget(_playerTransform.position);
-                _enemyMovement.MoveToTheTarget(_playerTransform.position);
                 SetState(State.Move);
             }
             else
             {
-                _lookAtTarget.RotateTowardsTarget(_startPoint);
-                _enemyMovement.MoveToTheTarget(_startPoint);
 
-                if (transform.position == _startPoint)
+                if (_isPatrol)
                 {
-                    _enemyMovement.ResetMove();
+                    SetState(State.Patrol);
+                }
+                else
+                {
                     SetState(State.Idle);
                 }
-                    
+
             }
 
             UpdateState(_currentState);
@@ -116,9 +129,13 @@ namespace TDS.Game.Enemies
             {
                 case State.Idle:
                     _enemyMovement.enabled = false;
+                    _enemyPatrol.enabled = false;
                     _enemyMovement.ResetMove();
+                    _enemyAnimation.EnemyIdle(_rb.velocity.magnitude);
                     break;
                 case State.Move:
+                    _enemyPatrol.enabled = false;
+                    _enemyMovement.SetTarget(_playerTransform);
                     _enemyMovement.enabled = true;
                     break;
                 case State.Attack:
@@ -130,9 +147,15 @@ namespace TDS.Game.Enemies
                     _enemyAnimation.EnemyDeath();
                     _enemyMovement.enabled = false;
                     _enemyMovement.ResetMove();
-                    _lookAtTarget.enabled = false;
                     _enemyAttack.enabled = false;
                     _circleCollider.enabled = false;
+                    CreatePickupIfNeeded();
+                    break;
+                // case State.BackToStartPosition:
+                //     _enemyMovement.SetTarget(_startPoint);
+                //     break;
+                case State.Patrol:
+                    _enemyPatrol.enabled = true;
                     break;
             }
         }
@@ -143,10 +166,33 @@ namespace TDS.Game.Enemies
             {
                 case State.Move:
                     _enemyAnimation.EnemyMove(_rb.velocity.magnitude);
+                    // _lookAtTarget.RotateTowardsTarget(_playerTransform.position);
+                    // _enemyMovement.MoveToTheTarget();
+                    // _enemyMovement.MoveToTheTarget(_playerTransform.position);
                     break;
                 case State.Attack:
                     _enemyAttack.Attack();
                     break;
+                    // case State.BackToStartPosition:
+                    //     _lookAtTarget.RotateTowardsTarget(_startPoint.position);
+                    //     // _enemyMovement.MoveToTheTarget();
+                    //     // _enemyMovement.MoveToTheTarget(_startPoint);
+                    //     break;
+            }
+        }
+
+        // private bool IsNearStartPosition()
+        // {
+        //     return Vector3.Distance(transform.position, _startPoint.position) >= 0.2f;
+        // }
+
+        private void CreatePickupIfNeeded()
+        {
+            float randomChance = Random.Range(1f, 100f);
+
+            if (_pickupChance > randomChance)
+            {
+                Instantiate(_pickupPrefab[0], transform.position, Quaternion.identity);
             }
         }
 

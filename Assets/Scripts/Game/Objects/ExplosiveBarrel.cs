@@ -1,32 +1,34 @@
 using System.Collections;
-using TDS.Game.Enemies;
-using TDS.Game.Player;
+using TDS.Game.Core;
 using TDS.Utility.Constants;
 using UnityEngine;
 
 namespace TDS.Game.Objects
 {
-    public class ExplosiveBarrel : MonoBehaviour
+    public class ExplosiveBarrel : MonoBehaviour, IDamageable
     {
         #region Variables
 
+        [SerializeField] private Collider2D _collider2D;
+
         [Header("Explosion setting")] 
-        [SerializeField] private float _radius;
+        [SerializeField] private float _damageRadius;
         [SerializeField] private int _damage = 2;
-        
-        [Header("Animation")] 
+        [SerializeField] private LayerMask _layerMask;
+
+        [Header("Animation")]
         [SerializeField] private Animator _animator;
         [SerializeField] private string _explosionName;
 
         #endregion
-        
+
 
         #region Unity lifecycle
 
         private void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, _radius);
+            Gizmos.DrawWireSphere(transform.position, _damageRadius);
         }
 
         private void OnTriggerEnter2D(Collider2D col)
@@ -34,9 +36,19 @@ namespace TDS.Game.Objects
             if (!col.CompareTag(Tags.PlayerBullet))
                 return;
 
+            TakeDamage(_damage);
+        }
+
+        #endregion
+
+
+        #region Public methods
+
+        public void TakeDamage(int damage)
+        {
+            _collider2D.enabled = false;
             _animator.SetTrigger(_explosionName);
             Explosion();
-            StartCoroutine(DelayAndDestroy());
         }
 
         #endregion
@@ -44,34 +56,21 @@ namespace TDS.Game.Objects
 
         #region Private methods
 
-        private IEnumerator DelayAndDestroy()
-        {
-            yield return new WaitForSeconds(1f);
-            Destroy(gameObject);
-        }
-
         private void Explosion()
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _damageRadius, _layerMask);
 
             foreach (Collider2D col in colliders)
             {
-                if (col.gameObject == gameObject)
-                    continue;
+                IDamageable damageable = col.gameObject.GetComponent<IDamageable>();
 
-                if (col.gameObject.CompareTag(Tags.Enemy))
-                {
-                    EnemyHealth enemyHealth = col.gameObject.GetComponent<EnemyHealth>();
-                    enemyHealth.TakeDamage(_damage);
-                }
-
-                if (col.gameObject.CompareTag(Tags.Player))
-                {
-                    PlayerHealth playerHealth = col.gameObject.GetComponent<PlayerHealth>();
-                    playerHealth.TakeDamage(_damage);
-                }
+                if (!damageable.Equals(null))
+                    damageable.TakeDamage(_damage);
             }
         }
+
+        private void Delete() =>
+            Destroy(gameObject);
 
         #endregion
     }

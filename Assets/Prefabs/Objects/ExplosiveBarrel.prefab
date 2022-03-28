@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7067243504474764367}
   - component: {fileID: 7067243504474764368}
   - component: {fileID: 7067243504474764366}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ExplosiveBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7067243504474764365}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -154,7 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e0b3dcf83856fb46b78d904ba659974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: 2.6
+  _collider2D: {fileID: 7067243504474764364}
+  _damageRadius: 3
   _damage: 8
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 1216
   _animator: {fileID: 7067243504474764368}
   _explosionName: Explosion

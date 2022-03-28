@@ -11,14 +11,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - CameraConfiner
   - Water
   - UI
   - Player
   - Enemy
   - PlayerBullet
   - EnemyBullet
-  - 
+  - ExplosiveBarrel
   - 
   - 
   - 
@@ -41,6 +41,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 513463619
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Player
+    uniqueID: 3999504493
+    locked: 0
+  - name: Bullet
+    uniqueID: 3331222949
     locked: 0

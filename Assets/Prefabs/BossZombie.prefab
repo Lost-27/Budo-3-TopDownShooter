@@ -157,12 +157,12 @@ GameObject:
   - component: {fileID: 6339364522332797712}
   - component: {fileID: 6339364522332797715}
   - component: {fileID: 6339364522332797717}
-  - component: {fileID: 7301900199629073086}
   - component: {fileID: 8163653151483555789}
   - component: {fileID: 2280636296743039592}
   - component: {fileID: 9154459909845720962}
   - component: {fileID: 4162906207330297503}
   - component: {fileID: 7511594385069111158}
+  - component: {fileID: 677172486079235944}
   m_Layer: 7
   m_Name: BossZombie
   m_TagString: Enemy
@@ -223,18 +223,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.6
---- !u!114 &7301900199629073086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6339364522332797716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2808959322e175d47aa4adebbaa7e09a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8163653151483555789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,13 +236,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyAnimation: {fileID: 2280636296743039592}
-  _lookAtTarget: {fileID: 7301900199629073086}
   _enemyMovement: {fileID: 9154459909845720962}
   _enemyAttack: {fileID: 4162906207330297503}
+  _enemyPatrol: {fileID: 677172486079235944}
   _rb: {fileID: 6339364522332797715}
   _circleCollider: {fileID: 6339364522332797717}
   _moveRadius: 7
   _attackRadius: 2.4
+  _pickupPrefab:
+  - {fileID: 4545186994452316614, guid: 6ec43a3c57ff03844a6036b6a5490b79, type: 3}
+  _pickupChance: 70.5
+  _isPatrol: 0
   _currentState: 0
 --- !u!114 &2280636296743039592
 MonoBehaviour:
@@ -321,3 +313,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemy: {fileID: 8163653151483555789}
   _maxHp: 4
+--- !u!114 &677172486079235944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6339364522332797716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b012b9f22d5f1924f9ca991f22442188, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyMovement: {fileID: 9154459909845720962}
+  _points: []

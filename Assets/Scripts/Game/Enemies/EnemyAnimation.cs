@@ -20,6 +20,9 @@ namespace TDS.Game.Enemies
 
         public void EnemyAttack() =>
             _animator.SetTrigger(_attackName);
+        
+        public void EnemyIdle(float speed) =>
+            _animator.SetFloat(_speedName, speed);
 
         public void EnemyMove(float speed) =>
            _animator.SetFloat(_speedName, speed);

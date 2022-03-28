@@ -9,22 +9,19 @@ namespace TDS.Game.Enemies
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private float _speed;
 
-        // private Vector3 _startPos;
+        private Transform _targetTransform;
 
         #endregion
 
 
         #region Unity lifecycle
 
-        private void Start()
+        private void Update()
         {
-            // _startPos = transform.position;
+            Vector3 direction = Direction();
+            MoveToTheTarget(direction.normalized);
+            RotateTowardsTarget(direction);
         }
-
-        // private void Update()
-        // {
-        //     MoveToTheTarget();
-        // }
 
         #endregion
 
@@ -34,17 +31,22 @@ namespace TDS.Game.Enemies
         public void ResetMove() =>
             _rb.velocity = Vector2.zero;
 
-        public void MoveToTheTarget(Vector3 targetPos)
-        {
-            Vector3 direction = (targetPos - transform.position).normalized;
-            _rb.velocity = direction * _speed;
-        }
+        public void SetTarget(Transform target) =>
+            _targetTransform = target;
 
-        // public void MoveToTheStartPoint()
-        // {
-        //     Vector2 direction = (_startPos - transform.position).normalized;
-        //     _rb.velocity = direction * _speed;
-        // }
+        #endregion
+
+
+        #region Private methods
+
+        private Vector3 Direction() =>
+            (_targetTransform.position - transform.position).normalized;
+
+        private void RotateTowardsTarget(Vector3 directionToTarget) =>
+            transform.up = directionToTarget;
+
+        private void MoveToTheTarget(Vector3 directionToTarget) =>
+            _rb.velocity = directionToTarget * _speed;
 
         #endregion
     }

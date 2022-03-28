@@ -1,8 +1,9 @@
+using TDS.Game.Core;
 using UnityEngine;
 
 namespace TDS.Game.Player
 {
-    public class PlayerHealth : MonoBehaviour
+    public class PlayerHealth : MonoBehaviour, IDamageable
     {
         #region Variable
 
