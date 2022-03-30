@@ -18,8 +18,11 @@ namespace TDS.Game.Enemies
 
         private void Update()
         {
+            if (_targetTransform == null)
+                return;
+
             Vector3 direction = Direction();
-            MoveToTheTarget(direction.normalized);
+            MoveToTheTarget(direction);
             RotateTowardsTarget(direction);
         }
 
@@ -28,11 +31,14 @@ namespace TDS.Game.Enemies
 
         #region Public methods
 
-        public void ResetMove() =>
+        public void ResetMoveAndTarget()
+        {
+            _targetTransform = null;
             _rb.velocity = Vector2.zero;
+        }
 
-        public void SetTarget(Transform target) =>
-            _targetTransform = target;
+        public void SetTarget(Transform targetTransform) =>
+            _targetTransform = targetTransform;
 
         #endregion
 

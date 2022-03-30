@@ -11,6 +11,8 @@ namespace TDS.Game.Enemies
 
         [SerializeField] private float _attackDelay = 0.5f;
         [SerializeField] private int _damage = 1;
+
+        [Header("Damage area settings")]
         [SerializeField] private Transform _attackPoint;
         [SerializeField] private float _attackRadius;
         [SerializeField] private LayerMask _attackMask;

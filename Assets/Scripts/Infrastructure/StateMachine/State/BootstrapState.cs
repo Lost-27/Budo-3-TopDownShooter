@@ -1,5 +1,6 @@
 using TDS.Game.Input;
 using TDS.Infrastructure.SceneHelper;
+
 using TDS.Utility;
 using TDS.Utility.Constants;
 using UnityEngine;
@@ -49,6 +50,8 @@ namespace TDS.Infrastructure.StateMachine.State
         
         private void RegisterServices(ICoroutineRunner coroutineRunner)
         {
+            _services.Register<IGameStateMachine>(_gameStateMachine);
+
             _services.Register<IInputService>(new StandardInputService());
             _services.Register<ICoroutineRunner>(coroutineRunner);
             _services.Register<ISceneHelper>(new AsyncSceneHelper(_services.Get<ICoroutineRunner>()));

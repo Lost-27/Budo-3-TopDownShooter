@@ -7,7 +7,7 @@ namespace TDS.Game.Enemies
     {
         #region Variables
 
-        [SerializeField] private Enemy _enemy;
+        [SerializeField] private EnemyDeath _enemyDeath;
         [SerializeField] private int _maxHp;
 
         private int _currentHp;
@@ -32,7 +32,7 @@ namespace TDS.Game.Enemies
             _currentHp -= damage;
 
             if (_currentHp < 1)
-                _enemy.Death();
+                _enemyDeath.Death();
         }
 
         #endregion

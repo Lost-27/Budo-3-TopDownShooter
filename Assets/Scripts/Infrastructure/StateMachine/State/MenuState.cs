@@ -1,4 +1,3 @@
-using TDS.Infrastructure.SceneHelper;
 using TDS.UI;
 using TDS.Utility.Constants;
 using UnityEngine;
@@ -9,18 +8,16 @@ namespace TDS.Infrastructure.StateMachine.State
     {
         #region Variables
 
-        private readonly IGameStateMachine _gameStateMachine;
-        private readonly ISceneHelper _sceneHelper;
+        private readonly IGameStateMachine _gameStateMachine;        
 
         #endregion
         
 
         #region Constructor
 
-        public MenuState(IGameStateMachine gameStateMachine, ISceneHelper sceneHelper)
+        public MenuState(IGameStateMachine gameStateMachine)
         {
-            _gameStateMachine = gameStateMachine;
-            _sceneHelper = sceneHelper;
+            _gameStateMachine = gameStateMachine;            
         }
 
         #endregion
@@ -48,10 +45,8 @@ namespace TDS.Infrastructure.StateMachine.State
         #region Private methods
 
         private void PlayButtonClicked() =>
-            _sceneHelper.Load(SceneTitles.GameScene, EnterGameState);
-
-        private void EnterGameState() =>
-            _gameStateMachine.Enter<GameState>();
+            _gameStateMachine.Enter<LoadingState, string>(SceneTitles.GameScene);
+        
 
         #endregion
     }

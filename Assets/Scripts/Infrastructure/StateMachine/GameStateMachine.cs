@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TDS.Game.Input;
 using TDS.Infrastructure.SceneHelper;
 using TDS.Infrastructure.StateMachine.State;
 using TDS.Utility;
@@ -11,8 +10,8 @@ namespace TDS.Infrastructure.StateMachine
     {
         #region Variables
 
-        private readonly Dictionary<Type, IState> _states;
-        private IState _activeState;
+        private readonly Dictionary<Type, IExitableState> _states;
+        private IExitableState _activeState;
 
         #endregion
 
@@ -21,11 +20,12 @@ namespace TDS.Infrastructure.StateMachine
 
         public GameStateMachine(Services.Services services, ICoroutineRunner coroutineRunner)
         {
-            _states = new Dictionary<Type, IState>
+            _states = new Dictionary<Type, IExitableState>
             {
                 {typeof(BootstrapState), new BootstrapState(this, services, coroutineRunner)},
-                {typeof(MenuState), new MenuState(this, services.Get<ISceneHelper>())},
+                {typeof(MenuState), new MenuState(this)},
                 {typeof(GameState), new GameState(this)},
+                {typeof(LoadingState), new LoadingState(this, services.Get<ISceneHelper>())},
             };
         }
 
@@ -34,16 +34,35 @@ namespace TDS.Infrastructure.StateMachine
 
         #region Public methods
 
-        public void Enter<TState>() where TState : IState
+        public void Enter<TState>() where TState : class, IState
         {
-            _activeState?.Exit();
-            _activeState = _states[typeof(TState)];
-            _activeState.Enter();
+            TState state = ChangeState<TState>();
+            state.Enter();
         }
 
-        // public void Exit<TState>() where TState : IState
-        // {     
-        // }
+        public void Enter<TState, TPayload>(TPayload payload) where TState : class, IPayloadState<TPayload>
+        {
+            TState state = ChangeState<TState>();
+            state.Enter(payload);
+        }
+
+        #endregion
+
+
+        #region Private methods
+
+        private TState ChangeState<TState>() where TState : class, IExitableState
+        {
+            _activeState?.Exit();
+
+            TState state = GetState<TState>();
+            _activeState = state;
+
+            return state;
+        }
+
+        private TState GetState<TState>() where TState : class, IExitableState =>
+            _states[typeof(TState)] as TState;
 
         #endregion
     }

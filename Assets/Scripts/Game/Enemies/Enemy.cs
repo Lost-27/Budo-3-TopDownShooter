@@ -130,7 +130,7 @@ namespace TDS.Game.Enemies
                 case State.Idle:
                     _enemyMovement.enabled = false;
                     _enemyPatrol.enabled = false;
-                    _enemyMovement.ResetMove();
+                    _enemyMovement.ResetMoveAndTarget();
                     _enemyAnimation.EnemyIdle(_rb.velocity.magnitude);
                     break;
                 case State.Move:
@@ -140,13 +140,13 @@ namespace TDS.Game.Enemies
                     break;
                 case State.Attack:
                     _enemyMovement.enabled = false;
-                    _enemyMovement.ResetMove();
+                    _enemyMovement.ResetMoveAndTarget();
                     _enemyAnimation.EnemyMove(_rb.velocity.magnitude);
                     break;
                 case State.Death:
                     _enemyAnimation.EnemyDeath();
                     _enemyMovement.enabled = false;
-                    _enemyMovement.ResetMove();
+                    _enemyMovement.ResetMoveAndTarget();
                     _enemyAttack.enabled = false;
                     _circleCollider.enabled = false;
                     CreatePickupIfNeeded();
