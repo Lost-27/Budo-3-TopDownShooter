@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using TDS.UI;
+using TDS.Utility.Constants;
 
 namespace TDS.Infrastructure.StateMachine.State
 {
     public class GameState : IState
     {
-
         #region Variables
 
         private readonly GameStateMachine _gameStateMachine;
@@ -22,19 +20,27 @@ namespace TDS.Infrastructure.StateMachine.State
         }
 
         #endregion
-        
+
 
         #region Public methods
 
         public void Enter()
         {
+            DeathScreen.OnRestartButtonClicked += RestartButtonClicked;
         }
 
         public void Exit()
         {
+            DeathScreen.OnRestartButtonClicked -= RestartButtonClicked;
         }
 
         #endregion
 
+        #region Private methods
+
+        private void RestartButtonClicked() =>
+            _gameStateMachine.Enter<LoadingState, string>(SceneTitles.GameScene); //? SceneManager.LoadScene(SceneManager.GetActiveScene);
+
+        #endregion
     }
 }

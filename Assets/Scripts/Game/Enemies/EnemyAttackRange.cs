@@ -1,17 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TDS.Game.Enemies
 {
     public class EnemyAttackRange : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private TriggerObserver _triggerObserver;
         [SerializeField] private EnemyAttack _enemyAttack;
+        //[SerializeField] private EnemyDeath _enemyDeath;
         //[SerializeField] private EnemyMovement _enemyMovement;
-        [SerializeField] private MoveToPlayer _moveToPlayer;        
+        [SerializeField] private MoveToPlayer _moveToPlayer;
 
         private bool _isInRange;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Start()
         {
@@ -26,6 +32,11 @@ namespace TDS.Game.Enemies
 
             _enemyAttack.Attack();
         }
+
+        #endregion
+
+
+        #region Private methods
 
         private void Entered(Collider2D obj)
         {
@@ -44,5 +55,7 @@ namespace TDS.Game.Enemies
             _moveToPlayer.enabled = true;
             //_enemyMovement.enabled = true; // !
         }
+
+        #endregion
     }
 }

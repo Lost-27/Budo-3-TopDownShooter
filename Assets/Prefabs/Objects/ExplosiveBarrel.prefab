@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7067243504474764367}
   - component: {fileID: 7067243504474764368}
   - component: {fileID: 7067243504474764366}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: ExplosiveBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,7 +28,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7067243504474764365}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.5, y: 3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -159,6 +159,6 @@ MonoBehaviour:
   _damage: 8
   _layerMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 1216
   _animator: {fileID: 7067243504474764368}
   _explosionName: Explosion

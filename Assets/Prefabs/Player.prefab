@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -295462803
+  m_SortingLayerID: -497388019
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e1d6957545cbb1a4d8c407865f62a03d, type: 3}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 582337509744459915}
   - component: {fileID: 582337509744459912}
   - component: {fileID: 582337509744459914}
-  - component: {fileID: 1745009164}
+  - component: {fileID: 5659458087408874722}
   - component: {fileID: 582337509744459913}
   - component: {fileID: 7603480652727462545}
   - component: {fileID: 582337510415727235}
@@ -195,7 +195,7 @@ CircleCollider2D:
   m_Offset: {x: -0.41, y: 0.23}
   serializedVersion: 2
   m_Radius: 0.67
---- !u!114 &1745009164
+--- !u!114 &5659458087408874722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,13 +204,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 582337509744459910}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5dc8f06164d50a34a8ca4bc5fcc8ae14, type: 3}
+  m_Script: {fileID: 11500000, guid: f383e5224c6f3314884e77f0bb96f629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimation: {fileID: 582337508909322220}
+  _animation: {fileID: 582337508909322220}
   _playerMovement: {fileID: 582337509744459913}
   _playerAttack: {fileID: 7603480652727462545}
-  _circleCollider2D: {fileID: 582337509744459914}
+  _collider: {fileID: 582337509744459914}
 --- !u!114 &582337509744459913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,9 +253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5588b849b6e2f2f479578ffdeb658b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 1745009164}
+  _playerDeath: {fileID: 5659458087408874722}
   _maxHp: 10
-  CurrentHp: 0
 --- !u!1 &582337510407056304
 GameObject:
   m_ObjectHideFlags: 0

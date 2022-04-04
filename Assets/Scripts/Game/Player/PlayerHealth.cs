@@ -1,19 +1,22 @@
+using System;
 using TDS.Game.Core;
 using UnityEngine;
 
 namespace TDS.Game.Player
 {
-    public class PlayerHealth : MonoBehaviour, IDamageable
+    public class PlayerHealth : MonoBehaviour, IDamageable, IHealth
     {
         #region Variable
 
-        [SerializeField] private Player _player;
+        [SerializeField] private PlayerDeath _playerDeath;
         [SerializeField] private int _maxHp;
 
-        public int CurrentHp;
-
         #endregion
-        
+
+        public event Action OnChanged;
+        public int CurrentHp { get; private set; }
+        public int MaxHp => _maxHp;
+
 
         #region Unity lifecycle
 
@@ -23,7 +26,7 @@ namespace TDS.Game.Player
         }
 
         #endregion
-        
+
 
         #region Public methods
 
@@ -31,16 +34,20 @@ namespace TDS.Game.Player
         {
             CurrentHp -= damage;
 
+            OnChanged?.Invoke();
+
             if (CurrentHp < 1)
-                _player.Death();
+                _playerDeath.Death();
         }
-        
-        public void AddLive()
+
+        public void AddLife(int healthPoints)
         {
             if (CurrentHp >= _maxHp)
                 return;
-        
-            CurrentHp++;
+
+            CurrentHp += healthPoints;
+
+            OnChanged?.Invoke();
         }
 
         #endregion

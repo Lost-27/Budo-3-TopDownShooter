@@ -15,7 +15,5 @@ namespace TDS.Game.Input
             Input.GetButtonDown("Fire1");
 
         #endregion
-
-
     }
 }

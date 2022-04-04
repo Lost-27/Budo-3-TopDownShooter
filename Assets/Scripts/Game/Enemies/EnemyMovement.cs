@@ -6,6 +6,7 @@ namespace TDS.Game.Enemies
     {
         #region Variables
 
+        [SerializeField] private EnemyAnimation _enemyAnimation;
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private float _speed;
 
@@ -35,6 +36,7 @@ namespace TDS.Game.Enemies
         {
             _targetTransform = null;
             _rb.velocity = Vector2.zero;
+            _enemyAnimation.EnemyMove(_rb.velocity.magnitude);
         }
 
         public void SetTarget(Transform targetTransform) =>
@@ -51,8 +53,11 @@ namespace TDS.Game.Enemies
         private void RotateTowardsTarget(Vector3 directionToTarget) =>
             transform.up = directionToTarget;
 
-        private void MoveToTheTarget(Vector3 directionToTarget) =>
+        private void MoveToTheTarget(Vector3 directionToTarget)
+        {
             _rb.velocity = directionToTarget * _speed;
+            _enemyAnimation.EnemyMove(_rb.velocity.magnitude);
+        }
 
         #endregion
     }

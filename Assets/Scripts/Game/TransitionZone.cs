@@ -3,18 +3,23 @@ using TDS.Infrastructure.Services;
 using TDS.Utility.Constants;
 using UnityEngine;
 
-
-namespace TDS
+namespace TDS.Game
 {
     [RequireComponent(typeof(Collider2D))]
     public class TransitionZone : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private string _transitionScene;
 
         private Collider2D _collider2D;
-
         private ISceneHelper _sceneHelper;
         private bool _isTriggered;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void Awake()
         {
@@ -23,7 +28,7 @@ namespace TDS
         }
 
         private void Start()
-        {            
+        {
             _sceneHelper = Services.Container.Get<ISceneHelper>();
         }
 
@@ -38,5 +43,7 @@ namespace TDS
                 _isTriggered = true;
             }
         }
+
+        #endregion
     }
 }

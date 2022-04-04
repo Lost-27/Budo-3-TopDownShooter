@@ -5,10 +5,17 @@ namespace TDS.Game.Enemies
 {
     public class EnemyPatrol : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private EnemyMovement _enemyMovement;
         [SerializeField] private List<Transform> _points;
 
         private int _currentPointIndex = 0;
+
+        #endregion
+
+
+        #region Unity lifecycle
 
         private void OnEnable()
         {
@@ -21,6 +28,11 @@ namespace TDS.Game.Enemies
             CheckPosition();
         }
 
+        #endregion
+
+
+        #region Private methods
+
         private void CheckPosition()
         {
             float distance = Vector3.Distance(CurrentPoint().position, transform.position);
@@ -32,7 +44,6 @@ namespace TDS.Game.Enemies
 
             _enemyMovement.SetTarget(CurrentPoint());
             _enemyMovement.enabled = true;
-            
         }
 
         private void IncrementIndex()
@@ -43,7 +54,9 @@ namespace TDS.Game.Enemies
                 _currentPointIndex = 0;
         }
 
-        private Transform CurrentPoint() => 
+        private Transform CurrentPoint() =>
             _points[_currentPointIndex];
+
+        #endregion
     }
 }

@@ -5,10 +5,17 @@ namespace TDS.Game.Enemies
 {
     public class EnemyPickupSpawner : MonoBehaviour
     {
+        #region Variables
+
         [SerializeField] private List<GameObject> _pickupPrefab;
 
-        [Range(0f, 100f)] 
+        [Range(0f, 100f)]
         [SerializeField] private float _pickupChance;
+
+        #endregion
+
+
+        #region Public methods
 
         public void Spawn()
         {
@@ -19,5 +26,7 @@ namespace TDS.Game.Enemies
                 Instantiate(_pickupPrefab[0], transform.position, Quaternion.identity);
             }
         }
+
+        #endregion
     }
 }

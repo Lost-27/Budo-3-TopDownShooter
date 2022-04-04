@@ -1,38 +1,65 @@
+using System;
 using TDS.Game.Core;
 using UnityEngine;
 
 namespace TDS.Game.Enemies
 {
-    public class EnemyHealth : MonoBehaviour, IDamageable
+    public class EnemyHealth : MonoBehaviour, IDamageable, IHealth
     {
         #region Variables
 
         [SerializeField] private EnemyDeath _enemyDeath;
         [SerializeField] private int _maxHp;
 
-        private int _currentHp;
+        #endregion
+
+
+        #region Events
+
+        public event Action OnChanged;
 
         #endregion
-        
+
+
+        #region Properties
+
+        public int CurrentHp { get; private set; }
+        public int MaxHp => _maxHp;
+
+        #endregion
+
 
         #region Unity lifecycle
 
         private void Start()
         {
-            _currentHp = _maxHp;
+            CurrentHp = _maxHp;
+            OnChanged?.Invoke();
         }
 
         #endregion
-        
+
 
         #region Public methods
 
         public void TakeDamage(int damage)
         {
-            _currentHp -= damage;
+            CurrentHp -= damage;
 
-            if (_currentHp < 1)
+            OnChanged?.Invoke();
+
+            if (CurrentHp < 1)
                 _enemyDeath.Death();
+        }
+
+        public void AddLife(int healthPoints)
+        {
+            if (CurrentHp >= _maxHp)
+                return;
+
+            CurrentHp += healthPoints;
+
+            OnChanged?.Invoke();
         }
 
         #endregion
