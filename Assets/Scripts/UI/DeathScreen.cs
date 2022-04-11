@@ -9,7 +9,6 @@ namespace TDS.UI
     {
         #region Variables
 
-        [SerializeField] private PlayerDeath _playerDeath;
         [SerializeField] private GameObject _deathScreen;
         [SerializeField] private Button _restartButton;
 
@@ -27,29 +26,18 @@ namespace TDS.UI
 
         private void Awake()
         {
-            _deathScreen.SetActive(false);
+            SetActive(false);
+
             _restartButton.onClick.AddListener(() => OnRestartButtonClicked?.Invoke());
-        }
-
-        private void OnEnable()
-        {
-            _playerDeath.OnPlayerDeath += PlayerDeath;
-        }
-
-        private void OnDisable()
-        {
-            _playerDeath.OnPlayerDeath -= PlayerDeath;
         }
 
         #endregion
 
 
-        #region Private methods
+        #region Public methods
 
-        private void PlayerDeath()
-        {
-            _deathScreen.SetActive(true);
-        }
+        public void SetActive(bool isActive) =>
+            _deathScreen.SetActive(isActive);
 
         #endregion
     }

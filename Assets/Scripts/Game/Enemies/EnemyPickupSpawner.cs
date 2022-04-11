@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Lean.Pool;
 using UnityEngine;
 
 namespace TDS.Game.Enemies
@@ -9,7 +10,8 @@ namespace TDS.Game.Enemies
 
         [SerializeField] private List<GameObject> _pickupPrefab;
 
-        [Range(0f, 100f)]
+
+        [Range(0f, 100f)] 
         [SerializeField] private float _pickupChance;
 
         #endregion
@@ -23,8 +25,18 @@ namespace TDS.Game.Enemies
 
             if (_pickupChance > randomChance)
             {
-                Instantiate(_pickupPrefab[0], transform.position, Quaternion.identity);
+                LeanPool.Spawn(GetRandomPickupPrefab(), transform.position, Quaternion.identity);
             }
+        }
+
+        #endregion
+        
+
+        #region Private methods
+
+        private GameObject GetRandomPickupPrefab()
+        {
+            return _pickupPrefab[Random.Range(0,_pickupPrefab.Count)];
         }
 
         #endregion

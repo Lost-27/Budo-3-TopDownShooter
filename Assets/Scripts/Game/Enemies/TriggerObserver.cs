@@ -5,8 +5,6 @@ namespace TDS.Game.Enemies
 {
     public class TriggerObserver : MonoBehaviour
     {
-        public CircleCollider2D CircleCollider; //?
-
         #region Events
 
         public event Action<Collider2D> OnEntered;

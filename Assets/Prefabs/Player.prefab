@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -497388019
+  m_SortingLayerID: -295462803
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e1d6957545cbb1a4d8c407865f62a03d, type: 3}
@@ -210,6 +210,7 @@ MonoBehaviour:
   _animation: {fileID: 582337508909322220}
   _playerMovement: {fileID: 582337509744459913}
   _playerAttack: {fileID: 7603480652727462545}
+  _playerHealth: {fileID: 582337510415727235}
   _collider: {fileID: 582337509744459914}
 --- !u!114 &582337509744459913
 MonoBehaviour:
@@ -241,6 +242,7 @@ MonoBehaviour:
   _shootDelay: 0
   _bulletPrefab: {fileID: 3008816567217100, guid: c709de4b2ff67984c97681ba11ca5202, type: 3}
   _bulletSpawnPointTransform: {fileID: 582337510407056307}
+  _maxAmmo: 8
 --- !u!114 &582337510415727235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5588b849b6e2f2f479578ffdeb658b9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerDeath: {fileID: 5659458087408874722}
   _maxHp: 10
 --- !u!1 &582337510407056304
 GameObject:

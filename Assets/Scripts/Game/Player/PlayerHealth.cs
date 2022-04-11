@@ -8,14 +8,24 @@ namespace TDS.Game.Player
     {
         #region Variable
 
-        [SerializeField] private PlayerDeath _playerDeath;
         [SerializeField] private int _maxHp;
 
         #endregion
 
+
+        #region Events
+
         public event Action OnChanged;
+
+        #endregion
+
+
+        #region Properties
+
         public int CurrentHp { get; private set; }
         public int MaxHp => _maxHp;
+
+        #endregion
 
 
         #region Unity lifecycle
@@ -29,15 +39,16 @@ namespace TDS.Game.Player
 
 
         #region Public methods
-
+        //DUbliCK ispravit properti!!!!!!!!!!!!!!!!!11:11 sm dz!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         public void TakeDamage(int damage)
         {
+            if (CurrentHp < 1)
+                return;
+
             CurrentHp -= damage;
+            CurrentHp = Mathf.Max(0, CurrentHp);
 
             OnChanged?.Invoke();
-
-            if (CurrentHp < 1)
-                _playerDeath.Death();
         }
 
         public void AddLife(int healthPoints)
@@ -46,6 +57,7 @@ namespace TDS.Game.Player
                 return;
 
             CurrentHp += healthPoints;
+            CurrentHp = Mathf.Min(CurrentHp, _maxHp);
 
             OnChanged?.Invoke();
         }

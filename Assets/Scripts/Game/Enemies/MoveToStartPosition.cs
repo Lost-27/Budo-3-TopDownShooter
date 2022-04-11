@@ -1,8 +1,7 @@
-using TDS.Game.Enemies;
 using TDS.Game.Player;
 using UnityEngine;
 
-namespace TDS
+namespace TDS.Game.Enemies
 {
     public class MoveToStartPosition : MonoBehaviour
     {
@@ -17,26 +16,21 @@ namespace TDS
         #endregion
 
 
-        #region Unity lifecycle
-
-        private void OnEnable()
-        {
-            _playerDeath = FindObjectOfType<PlayerDeath>();
-            _playerDeath.OnPlayerDeath += PlayerDeath;
-        }
+        #region Unity lifecycle       
 
         private void Start()
         {
             // _playerDeath = FindObjectOfType<PlayerDeath>();
+            _playerDeath = FindObjectOfType<PlayerDeath>();
+            _playerDeath.OnDeath += PlayerDeath;
 
             _startPoint = new GameObject($"StartPointOf{name}").transform;
             _startPoint.position = transform.position;
-            
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
-            _playerDeath.OnPlayerDeath -= PlayerDeath; //?
+            _playerDeath.OnDeath -= PlayerDeath;
         }
 
         #endregion
@@ -46,12 +40,11 @@ namespace TDS
 
         private void PlayerDeath()
         {
+            _playerDeath.OnDeath -= PlayerDeath;
+
             _moveToPlayer.enabled = false;
             _enemyMovement.SetTarget(_startPoint);
             _enemyMovement.enabled = true;
-            _playerDeath.OnPlayerDeath -= PlayerDeath;
-            
-            //_playerDeath.OnPlayerDeath -= PlayerDeath;
         }
 
         #endregion

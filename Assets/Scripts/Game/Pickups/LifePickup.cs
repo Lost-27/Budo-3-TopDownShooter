@@ -1,3 +1,4 @@
+using Lean.Pool;
 using TDS.Game.Player;
 using TDS.Utility.Constants;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace TDS.Game.Pickups
 {
     public class LifePickup : MonoBehaviour
     {
-        #region MyRegion
+        #region Variables
 
         [SerializeField] private int _healthPoints = 1;
 
@@ -22,7 +23,7 @@ namespace TDS.Game.Pickups
                 col.GetComponent<PlayerHealth>().AddLife(_healthPoints);
             }
             
-            Destroy(gameObject);
+            LeanPool.Despawn(gameObject);
         }
 
         #endregion

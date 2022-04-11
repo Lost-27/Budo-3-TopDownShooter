@@ -13,7 +13,8 @@ namespace TDS.Game.Enemies
         [SerializeField] private EnemyPickupSpawner _enemyPickup;
         [SerializeField] private GameObject _agroRange;
         [SerializeField] private GameObject _attackRange;
-        [SerializeField] private CircleCollider2D _collider;
+        [SerializeField] private GameObject _sliderHP;
+        [SerializeField] private CircleCollider2D _collider;        
 
         #endregion
 
@@ -48,12 +49,16 @@ namespace TDS.Game.Enemies
         {
             IsEnemyDeath = true;
             _animation.EnemyDeath();
-            _enemyMovement.enabled = false;
-            _enemyMovement.ResetMoveAndTarget();
+            
             _enemyAttack.enabled = false;
             _collider.enabled = false;
             _agroRange.SetActive(false);
             _attackRange.SetActive(false);
+            _sliderHP.SetActive(false);
+
+            _enemyMovement.enabled = false;
+            _enemyMovement.ResetMoveAndTarget();
+
             _enemyPickup.Spawn();
 
             OnEnemyDeath?.Invoke();

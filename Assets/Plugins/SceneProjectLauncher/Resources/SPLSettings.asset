@@ -15,17 +15,17 @@ MonoBehaviour:
   NeedOpenSceneOnStart: 1
   StartSceneName: 0
   NeedOpenSceneOnStop: 1
-  StopSceneName: 2
+  StopSceneName: 4
   StartScene:
     SceneName: 0
     Path: Assets/Scenes/InitScene.unity
     Index: 0
     Name: InitScene
   StopScene:
-    SceneName: 2
-    Path: Assets/Scenes/GameScene.unity
-    Index: 2
-    Name: GameScene
+    SceneName: 4
+    Path: Assets/Scenes/Level3.unity
+    Index: 4
+    Name: Level3
   AllScenes:
   - SceneName: 0
     Path: Assets/Scenes/InitScene.unity
@@ -39,4 +39,12 @@ MonoBehaviour:
     Path: Assets/Scenes/GameScene.unity
     Index: 2
     Name: GameScene
+  - SceneName: 3
+    Path: Assets/Scenes/Level2.unity
+    Index: 3
+    Name: Level2
+  - SceneName: 4
+    Path: Assets/Scenes/Level3.unity
+    Index: 4
+    Name: Level3
   NeedRefresh: 0

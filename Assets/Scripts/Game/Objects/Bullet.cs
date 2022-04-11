@@ -1,4 +1,5 @@
 using System.Collections;
+using Lean.Pool;
 using TDS.Game.Enemies;
 using TDS.Utility.Constants;
 using UnityEngine;
@@ -14,17 +15,28 @@ namespace TDS.Game.Objects
         [SerializeField] private float _lifeTime;
 
         private Vector3 _velocity;
+        private IEnumerator _despawnBulletRoutine;
 
         #endregion
 
 
         #region Unity lifecycle
 
+        private void OnEnable()
+        {
+            _despawnBulletRoutine = DespawnBulletByLifeTime();
+            StartCoroutine(_despawnBulletRoutine);
+        }
+
+        private void OnDisable()
+        {
+            if (_despawnBulletRoutine != null)
+                StopCoroutine(_despawnBulletRoutine);
+        }
+
         private void Start()
         {
             _velocity = Vector3.up * _speed;
-
-            StartCoroutine(DeleteBulletByLifeTime());
         }
 
         private void Update() =>
@@ -36,8 +48,8 @@ namespace TDS.Game.Objects
             {
                 col.GetComponent<EnemyHealth>().TakeDamage(_damage);
             }
-            
-            Delete();
+
+            DespawnBullet();
         }
 
         #endregion
@@ -48,15 +60,15 @@ namespace TDS.Game.Objects
         private void Move() =>
             transform.Translate(_velocity * Time.deltaTime);
 
-        private IEnumerator DeleteBulletByLifeTime()
+        private IEnumerator DespawnBulletByLifeTime()
         {
             yield return new WaitForSeconds(_lifeTime);
 
-            Delete();
+            DespawnBullet();
         }
 
-        private void Delete() =>
-            Destroy(gameObject);
+        private void DespawnBullet() =>
+            LeanPool.Despawn(gameObject);
 
         #endregion
     }

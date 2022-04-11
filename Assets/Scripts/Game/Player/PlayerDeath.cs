@@ -10,6 +10,7 @@ namespace TDS.Game.Player
         [SerializeField] private PlayerAnimation _animation;
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerAttack _playerAttack;
+        [SerializeField] private PlayerHealth _playerHealth;
         [SerializeField] private CircleCollider2D _collider;
 
         #endregion
@@ -17,7 +18,7 @@ namespace TDS.Game.Player
 
         #region Events
 
-        public event Action OnPlayerDeath;
+        public event Action OnDeath;
 
         #endregion
 
@@ -31,6 +32,15 @@ namespace TDS.Game.Player
 
         #region Unity lifecycle
 
+        private void OnEnable()
+        {
+            _playerHealth.OnChanged += HealthChanged;
+        }
+        private void OnDisable()
+        {
+            _playerHealth.OnChanged -= HealthChanged;
+        }
+
         private void Start()
         {
             IsPlayerDeath = false;
@@ -39,9 +49,15 @@ namespace TDS.Game.Player
         #endregion
 
 
-        #region Public methods
+        #region Private methods
 
-        public void Death()
+        private void HealthChanged()
+        {
+            if (!IsPlayerDeath && _playerHealth.CurrentHp < 1)
+                Death();
+        }
+
+        private void Death()
         {
             IsPlayerDeath = true;
             _animation.PlayDeath();
@@ -49,8 +65,8 @@ namespace TDS.Game.Player
             _playerMovement.ResetMove();
             _playerAttack.enabled = false;
             _collider.enabled = false;
-            
-            OnPlayerDeath?.Invoke();
+
+            OnDeath?.Invoke();
         }
 
         #endregion

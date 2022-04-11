@@ -1,3 +1,5 @@
+using System;
+using Lean.Pool;
 using TDS.Game.Input;
 using TDS.Infrastructure.Services;
 using UnityEngine;
@@ -12,14 +14,33 @@ namespace TDS.Game.Player
         [SerializeField] private float _shootDelay = 0.5f;
         [SerializeField] private GameObject _bulletPrefab;
         [SerializeField] private Transform _bulletSpawnPointTransform;
+        [SerializeField] private int _maxAmmo = 8;
 
         private IInputService _inputService;
         private float _currentDelay;
+        private int _currenAmmo;
+
+        #endregion
+        
+
+        #region Events
+        public event Action OnAmmoChanged;
+
+        #endregion
+
+        #region Properties
+        public int CurrentAmmo => _currenAmmo;
 
         #endregion
         
 
         #region Unity lifecycle
+
+        private void Awake()
+        {
+            _currenAmmo = _maxAmmo;
+            OnAmmoChanged?.Invoke();
+        }
 
         private void Start()
         {
@@ -30,8 +51,13 @@ namespace TDS.Game.Player
         {
             DecrementTimer(Time.deltaTime);
 
-            if (_inputService.IsFireButtonClicked() && CanShoot())
+            if (_inputService.IsFireButtonClicked() && CanShoot() && HaveAmmunition())
+            {
                 Attack();
+                _currenAmmo--;
+                OnAmmoChanged?.Invoke();
+            }
+               
         }
 
         #endregion
@@ -45,6 +71,9 @@ namespace TDS.Game.Player
         private bool CanShoot() =>
             _currentDelay <= 0f;
 
+        private bool HaveAmmunition() =>
+            _currenAmmo > 0;
+
         private void Attack()
         {
             CreateBullet();
@@ -56,7 +85,18 @@ namespace TDS.Game.Player
             _currentDelay = _shootDelay;
 
         private void CreateBullet() =>
-            Instantiate(_bulletPrefab, _bulletSpawnPointTransform.position, _bulletSpawnPointTransform.rotation);
+            LeanPool.Spawn(_bulletPrefab, _bulletSpawnPointTransform.position, _bulletSpawnPointTransform.rotation);
+        
+        public void AddAmmo(int ammoPoints)
+        {
+            if (_currenAmmo >= _maxAmmo)
+                return;
+
+            _currenAmmo += ammoPoints;
+            _currenAmmo = Mathf.Min(_currenAmmo, _maxAmmo);
+
+            OnAmmoChanged?.Invoke();
+        }
 
         #endregion
     }
