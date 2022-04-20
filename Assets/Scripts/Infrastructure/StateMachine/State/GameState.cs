@@ -1,5 +1,5 @@
 using TDS.UI;
-using TDS.Utility.Constants;
+using UnityEngine.SceneManagement;
 
 namespace TDS.Infrastructure.StateMachine.State
 {
@@ -36,10 +36,14 @@ namespace TDS.Infrastructure.StateMachine.State
 
         #endregion
 
+
         #region Private methods
 
-        private void RestartButtonClicked() =>
-            _gameStateMachine.Enter<LoadingState, string>(SceneTitles.GameScene); //? SceneManager.LoadScene(SceneManager.GetActiveScene);
+        private void RestartButtonClicked()
+        {
+            Scene activeScene = SceneManager.GetActiveScene();
+            _gameStateMachine.Enter<LoadingState, string>(activeScene.name);
+        }
 
         #endregion
     }

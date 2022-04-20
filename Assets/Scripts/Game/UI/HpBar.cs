@@ -16,9 +16,6 @@ namespace TDS.Game.UI
 
         public void SetValues(int currentValue, int maxValue)
         {
-            if (maxValue == 0)
-                return;
-
             _hpSlider.maxValue = maxValue;
             _hpSlider.value = currentValue;
         }

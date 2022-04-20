@@ -21,9 +21,8 @@ namespace TDS.Game.Pickups
             if (col.CompareTag(Tags.Player))
             {
                 col.GetComponent<PlayerHealth>().AddLife(_healthPoints);
+                LeanPool.Despawn(gameObject);
             }
-            
-            LeanPool.Despawn(gameObject);
         }
 
         #endregion

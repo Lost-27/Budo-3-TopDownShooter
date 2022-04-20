@@ -9,17 +9,16 @@ namespace TDS.Game.Enemies
         [SerializeField] private TriggerObserver _triggerAgro;
         [SerializeField] private TriggerObserver _triggerInstantAgro;
         [SerializeField] private EnemyFollow _enemyFollow;
+        [SerializeField] private EnemyIdleBehaviour _idleBehaviour;
 
-        [Header("View Zone")] 
+        [Header("View Zone")]
         [SerializeField] private CircleCollider2D _circleCollider;
 
-        [Range(0, 360)] 
+        [Range(0, 360)]
         [SerializeField] private float _viewAngle;
 
-        [Header("Raycast")] 
-        [SerializeField] private LayerMask _raycastMask;
-
-        private bool _isFollow;
+        [Header("Raycast")]
+        [SerializeField] private LayerMask _raycastMask;        
 
         #endregion
 
@@ -39,18 +38,7 @@ namespace TDS.Game.Enemies
             _triggerAgro.OnStayed += Stayed;
             _triggerAgro.OnExited += Exited;
             _triggerInstantAgro.OnEntered += Entered;
-        }
-
-
-        private void OnDrawGizmosSelected()
-        {
-            Vector3 viewAngleA = DirectionFromAngle(-_viewAngle / 2, false);
-            Vector3 viewAngleB = DirectionFromAngle(_viewAngle / 2, false);
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, transform.position + viewAngleA * _circleCollider.radius);
-            Gizmos.DrawLine(transform.position, transform.position + viewAngleB * _circleCollider.radius);
-        }
+        }       
 
         #endregion
 
@@ -75,18 +63,15 @@ namespace TDS.Game.Enemies
             Vector3 direction = obj.transform.position - transform.position;
             RaycastHit2D hit2D = Physics2D.Raycast(transform.position, direction, direction.magnitude, _raycastMask);
 
-            Debug.DrawRay(transform.position, direction, Color.red);
-            Debug.Log($"Hit {hit2D.collider}");
-
             if (hit2D.collider != null)
                 return;
 
-            _enemyFollow.enabled = true;
+            Follow(true);
         }
 
         private void Stayed(Collider2D obj)
         {
-            if (_isFollow)
+            if (_enemyFollow.enabled)
                 return;
 
             Vector3 direction = obj.transform.position - transform.position;
@@ -97,21 +82,29 @@ namespace TDS.Game.Enemies
             if (angle > _viewAngle * 0.5f)
                 return;
 
-            RaycastHit2D hit2D = Physics2D.Raycast(transform.position, direction, direction.magnitude, _raycastMask);
-
-            Debug.DrawRay(transform.position, direction, Color.red);
-            Debug.Log($"Hit {hit2D.collider}");
+            RaycastHit2D hit2D = Physics2D.Raycast(transform.position, direction, direction.magnitude, _raycastMask);            
 
             if (hit2D.collider != null)
                 return;
 
-            _enemyFollow.enabled = true;
+            Follow(true);
         }
 
         private void Exited(Collider2D obj)
         {
-            _enemyFollow.enabled = false;
-            _isFollow = false;
+            Follow(false);
+        }
+
+        private void Follow(bool isFallow)
+        {
+            _enemyFollow.enabled = isFallow;
+            EnableIdle(!isFallow);
+        }
+
+        private void EnableIdle(bool isEnabled)
+        {
+            if (_idleBehaviour != null)
+                _idleBehaviour.enabled = isEnabled;
         }
 
         #endregion

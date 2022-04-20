@@ -1,5 +1,6 @@
-using TDS.Infrastructure.SceneHelper;
 using TDS.Infrastructure.Services;
+using TDS.Infrastructure.StateMachine;
+using TDS.Infrastructure.StateMachine.State;
 using TDS.Utility.Constants;
 using UnityEngine;
 
@@ -12,8 +13,9 @@ namespace TDS.Game
 
         [SerializeField] private string _transitionScene;
 
-        private Collider2D _collider2D;
-        private ISceneHelper _sceneHelper;
+        private IGameStateMachine _stateMachine;
+
+        private Collider2D _collider2D;        
         private bool _isTriggered;
 
         #endregion
@@ -29,7 +31,7 @@ namespace TDS.Game
 
         private void Start()
         {
-            _sceneHelper = Services.Container.Get<ISceneHelper>();
+            _stateMachine = Services.Container.Get<IGameStateMachine>();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +41,7 @@ namespace TDS.Game
 
             if (collision.CompareTag(Tags.Player))
             {
-                _sceneHelper.Load(_transitionScene);
+                _stateMachine.Enter<LoadingState, string>(_transitionScene);
                 _isTriggered = true;
             }
         }

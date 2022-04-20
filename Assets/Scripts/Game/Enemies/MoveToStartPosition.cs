@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace TDS.Game.Enemies
 {
-    public class MoveToStartPosition : MonoBehaviour
+    public class MoveToStartPosition : EnemyIdleBehaviour
     {
         #region Variables
 

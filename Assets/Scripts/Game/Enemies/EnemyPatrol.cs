@@ -1,16 +1,28 @@
-using System.Collections.Generic;
+using TDS.Game.Core;
 using UnityEngine;
 
 namespace TDS.Game.Enemies
 {
-    public class EnemyPatrol : MonoBehaviour
+    public class EnemyPatrol : EnemyIdleBehaviour
     {
         #region Variables
 
         [SerializeField] private EnemyMovement _enemyMovement;
-        [SerializeField] private List<Transform> _points;
+        [SerializeField] private PatrolPath _patrolPath;
+        [SerializeField] private float _distanceToPoint = 1f;
 
-        private int _currentPointIndex = 0;
+        #endregion
+
+
+        #region Constructor
+
+        public void Construct(PatrolPath patrolPath)
+        {
+            _patrolPath = patrolPath;
+
+            if (isActiveAndEnabled)
+                SetTarget();
+        }
 
         #endregion
 
@@ -19,12 +31,17 @@ namespace TDS.Game.Enemies
 
         private void OnEnable()
         {
-            _enemyMovement.SetTarget(CurrentPoint());
-            _enemyMovement.enabled = true;
+            if (_patrolPath == null)
+                return;
+
+            SetTarget();
         }
 
         private void Update()
         {
+            if (_patrolPath == null)
+                return;
+
             CheckPosition();
         }
 
@@ -35,27 +52,18 @@ namespace TDS.Game.Enemies
 
         private void CheckPosition()
         {
-            float distance = Vector3.Distance(CurrentPoint().position, transform.position);
-
-            if (distance > 1f)
+            if (!_patrolPath.IsReachPosition(transform.position, _distanceToPoint))
                 return;
 
-            IncrementIndex();
+            _patrolPath.SetNextPoint();
+            SetTarget();
+        }
 
-            _enemyMovement.SetTarget(CurrentPoint());
+        private void SetTarget()
+        {
+            _enemyMovement.SetTarget(_patrolPath.CurrentPoint());
             _enemyMovement.enabled = true;
         }
-
-        private void IncrementIndex()
-        {
-            _currentPointIndex++;
-
-            if (_currentPointIndex >= _points.Count)
-                _currentPointIndex = 0;
-        }
-
-        private Transform CurrentPoint() =>
-            _points[_currentPointIndex];
 
         #endregion
     }

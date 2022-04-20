@@ -51,10 +51,23 @@ namespace TDS.Infrastructure.StateMachine.State
 
         private static void SetupHUD()
         {
-            PlayerHealth playerHealths = Object.FindObjectOfType<PlayerHealth>();
             GameObject hud = GameObject.Find("HUD");
+            PlayerHealth playerHealth = Object.FindObjectOfType<PlayerHealth>();
+            SetupHpUI(hud, playerHealth);
+            SetupAmmoUI(hud, playerHealth);
+        }
+
+        private static void SetupAmmoUI(GameObject hud, PlayerHealth playerHealth)
+        {
+            AmmoUI ammoUI = hud.GetComponentInChildren<AmmoUI>();
+            PlayerAttack playerAttack = playerHealth.GetComponent<PlayerAttack>();
+            ammoUI.Construct(playerAttack);
+        }
+
+        private static void SetupHpUI(GameObject hud, PlayerHealth playerHealth)
+        {            
             ActorUI actorUI = hud.GetComponentInChildren<ActorUI>();
-            actorUI.Construct(playerHealths);
+            actorUI.Construct(playerHealth);
         }
 
         #endregion

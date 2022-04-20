@@ -39,7 +39,7 @@ namespace TDS.Game.Player
 
 
         #region Public methods
-        //DUbliCK ispravit properti!!!!!!!!!!!!!!!!!11:11 sm dz!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //TODO: DUbliCK ispravit properti!!!!!!!!!!!!!!!!!11:11 sm dz!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         public void TakeDamage(int damage)
         {
             if (CurrentHp < 1)

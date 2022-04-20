@@ -21,9 +21,8 @@ namespace TDS.Game.Pickups
             if (col.CompareTag(Tags.Player))
             {
                 col.GetComponent<PlayerAttack>().AddAmmo(_ammoPoints);
+                LeanPool.Despawn(gameObject);
             }
-
-            LeanPool.Despawn(gameObject);
         }
 
         #endregion
